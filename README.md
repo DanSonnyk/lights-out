@@ -19,3 +19,10 @@ Steps to solve:
 - parse initialPieces to piece in board 
 - Generate all possible positions for a piece in the board
 - Apply depth rules in a combinatorial analysis approach
+
+Stack to run:
+- Java 22
+- Junit 5
+
+To Run:
+Run MainTest class.
