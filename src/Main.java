@@ -1,9 +1,7 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 
 //    Goal:
@@ -51,8 +49,15 @@ public class Main {
         //parse initialPieces to piece in board
         String[] piecesInLine = lines.get(2).split(" ");
 
+
+        Map<Integer, List<int[][]>> mapPossiblePositionsPieces = new HashMap<>();
+
         //TODO: Generate all possible positions for a piece in the board
-        List<int[][]> allPossiblePositions = calculateAllPossiblePositions(board, piecesInLine, 0);
+        for (int i = 0; i < piecesInLine.length; i++) {
+            List<int[][]> allPossiblePositions = calculateAllPossiblePositions(board, piecesInLine, i);
+            mapPossiblePositionsPieces.put(i, allPossiblePositions);
+
+        }
 
         // TODO: Apply depth rules in a combinatorial analysis approach
 
@@ -64,10 +69,13 @@ public class Main {
 
         System.out.println("Depth: "+depth);
         System.out.println("Pieces: "+ Arrays.toString(piecesInLine));
-        allPossiblePositions.forEach(x -> {
-            Arrays.stream(x).forEach(x1 -> System.out.println(Arrays.toString(x1)));
-            System.out.println();});
-        System.out.println();
+        mapPossiblePositionsPieces.forEach((pieceNum, pieces) -> {
+            System.out.println("Piece: "+pieceNum);
+            for (int[][] piece : pieces){
+                Arrays.stream(piece).forEach(possiblePosition -> System.out.println(Arrays.toString(possiblePosition)));
+                System.out.println();
+            }
+        });
     }
 
     private List<int[][]> calculateAllPossiblePositions(List<List<Integer>> board, String[] piecesInLine, int pieceIndex) {
